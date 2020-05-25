@@ -1,4 +1,4 @@
-var Bitcore = require('@dashevo/dashcore-lib');
+var Bitcore = require('pyrkcore-lib');
 
 var socket;
 var paymentCycle;
