@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/pyrkcommunity/proposal-generator#readme",
   "devDependencies": {
-    "@pyrkcommunity/pyrkcore-lib": "^0.16.8",
+    "pyrkcore-lib": "https://github.com/pyrkcommunity/pyrkcore-lib.git",
     "browserify": "^16.2.3",
     "eslint": "^5.13.0"
   }
