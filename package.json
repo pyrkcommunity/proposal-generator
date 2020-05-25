@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dashevo/proposal-generator.git"
+    "url": "git+https://github.com/pyrkcommunity/proposal-generator.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dashevo/proposal-generator/issues"
+    "url": "https://github.com/pyrkcommunity/proposal-generator/issues"
   },
-  "homepage": "https://github.com/dashevo/proposal-generator#readme",
+  "homepage": "https://github.com/pyrkcommunity/proposal-generator#readme",
   "devDependencies": {
-    "@dashevo/dashcore-lib": "^0.16.8",
+    "@pyrkcommunity/pyrkcore-lib": "^0.16.8",
     "browserify": "^16.2.3",
     "eslint": "^5.13.0"
   }
