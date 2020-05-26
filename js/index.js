@@ -1,30 +1,18 @@
 var Bitcore = require('pyrkcore-lib');
 
-var socket;
 var paymentCycle;
 
-var mainnetProvider = 'https://insight.dashevo.org';
-var mainnetPrefix = '/insight-api';
+var mainnetProvider = 'https://explorer.pyrk.org'; //'https://insight.dashevo.org';
+var mainnetPrefix = '/api';
 
-var testnetProvider = 'https://testnet-insight.dashevo.org';
-var testnetPrefix = '/insight-api';
+var testnetProvider = ''; //https://testnet-insight.dashevo.org';
+var testnetPrefix = ''; ///insight-api';
 
 var init = function(network, provider, prefix) {
     var gov = new Bitcore.GovObject.Proposal();
     gov.network = network || 'mainnet';
 
     paymentCycle = new PaymentCycle(gov, provider, prefix);
-
-    socket = io(provider);
-
-    socket.on('connect', function() {
-        socket.emit('subscribe', 'inv');
-        console.log("socket.io initialized...");
-    });
-
-    socket.on('disconnect', function() {
-        console.log('connection lost');
-    });
 
     return gov;
 };
@@ -134,7 +122,7 @@ $(document).ready(function() {
         var proposal = new ProposalGenerator(gov);
 
         var transaction = $(this).val().trim();
-        var txListener = new TXListener(socket, paymentCycle.provider, paymentCycle.prefix, transaction);
+        var txListener = new TXListener(paymentCycle.provider, paymentCycle.prefix, transaction);
 
         // check if tx exists in insight
         txListener.getTx(function(err, res) {
@@ -168,7 +156,7 @@ $(document).ready(function() {
                 txListener.blockheight = res.blockheight;
                 txListener.confirmations = res.confirmations;
 
-                txListener.initSocket(function() {
+                txListener.initListen(function() {
                     $('#walletCommandsSubmit').removeClass('hidden');
                     document.getElementById('step_four').click();
                     $('#step_four').removeClass('hidden');

@@ -8,10 +8,13 @@ function PaymentCycle(gov, provider, prefix) {
     var self = this;
 
     this.network = gov.network;
-    this.provider = provider;
-    this.prefix = prefix;
-    this.paymentCycle = 16616;
-    this.proposalMaturity = 1662; // ~(60*24*3)/2.6 = about three days
+    this.provider = 'https://explorer.pyrk.org'; //provider;
+    this.prefix = '/api'; //prefix;
+    
+    //https://explorer.pyrk.org/api/getinfo
+    
+    this.paymentCycle = 29200;
+    this.proposalMaturity = 2880; // ~(60*24*3)/2.6 = about three days
     this.budgetCycles = 24;
 
     this.selectedStartIndex = 0;
@@ -44,7 +47,7 @@ function PaymentCycle(gov, provider, prefix) {
     };
 
     this.getInfo(function(err, res) {
-        self.blockHeight = res.info.blocks;
+        self.blockHeight = res.blocks;
         console.log("current blockheight: " + self.blockHeight);
 
         self.updateDropdowns();
@@ -52,6 +55,8 @@ function PaymentCycle(gov, provider, prefix) {
 }
 
 PaymentCycle.prototype.getNextSuperblock = function(block) {
+	// Cycle starts at block 25000
+	block = block + 25000;
     return (Math.floor((block/this.paymentCycle)) * this.paymentCycle + this.paymentCycle);
 };
 
@@ -59,7 +64,7 @@ PaymentCycle.prototype.getBlockTimestamp = function(block) {
     var blocks = block - this.blockHeight;
     var now = Math.floor(Date.now());
 
-    return (now + (blocks * (155 * 1000))); // 155 seconds per block x 1000 = ms per block
+    return (now + (blocks * (90 * 1000))); // 155 seconds per block x 1000 = ms per block
 };
 
 PaymentCycle.prototype.getTimeDifference = function(opts, start, end) {
@@ -193,7 +198,7 @@ PaymentCycle.prototype.updateEndEpoch = function() {
 };
 
 PaymentCycle.prototype.getInfo = function(cb) {
-    $.getJSON(this.provider + this.prefix + "/status?q=getinfo", function( data ) {
+    $.getJSON(this.provider + this.prefix + "/getinfo", function( data ) {
         cb(null, data);
     });
 };
